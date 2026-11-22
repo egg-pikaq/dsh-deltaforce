@@ -4,6 +4,7 @@ const sequenceMarkup = `
     <div class="cin-orbit">
       <div class="cin-stars"></div>
       <div class="cin-planet"></div>
+      <div class="cin-finale-backdrop"></div>
       <div class="cin-orbit-title"><span>HAAVK</span><strong>天空属于哈夫克</strong></div>
     </div>
     <div class="cin-console">
@@ -11,14 +12,14 @@ const sequenceMarkup = `
       <div class="cin-data-rain"></div>
       <div class="cin-console-scan"></div>
       <div class="cin-console-sweep"></div>
-      <div class="cin-console-arc"></div>
-      <div class="cin-console-header"><strong>HAAVK</strong><span>超算平台</span></div>
+      <canvas class="cin-console-hud"></canvas>
+      <div class="cin-console-header"><strong>HAAVK</strong><span>COMPUTE PLATFORM</span></div>
       <div class="cin-console-stream"></div>
       <div class="cin-console-panel">
         <strong class="cin-console-label"></strong>
         <span class="cin-console-spoken" lang="en"></span>
         <div class="cin-console-identity">
-          <span>身份资料 / OPERATOR RECORD</span>
+          <span>OPERATOR RECORD</span>
           <b>GUEST NODE</b>
         </div>
       </div>
@@ -40,6 +41,7 @@ function prepareSequence(frame, reduced) {
       rain.append(streak);
     }
   }
+  const paintHud = prepareHud(frame.querySelector('.cin-console-hud'), reduced);
   const panel = frame.querySelector('.cin-console-panel');
   const label = frame.querySelector('.cin-console-label');
   const spoken = frame.querySelector('.cin-console-spoken');
@@ -69,6 +71,8 @@ function prepareSequence(frame, reduced) {
         }
         lastIndex = index;
       }
+      const cue = introCues[index];
+      paintHud(cue.kind, t - cue.at, (introCues[index + 1]?.at ?? introDuration) - cue.at);
       const tick = Math.floor(t / 140);
       if (tick !== lastTick && (introCues[index].kind === 'uplink' || introCues[index].kind === 'sync')) {
         stream.textContent = Array.from({ length: 5 }, (_, row) => {

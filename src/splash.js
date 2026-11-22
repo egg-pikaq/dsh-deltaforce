@@ -4,18 +4,18 @@ const startupGrace = 1400;
 const voiceGrace = 1200;
 const hardLimit = 42000;
 const steps = [
-  [0, '正在初始化显示链路'],
-  [0.19, '正在校准全息网格'],
-  [0.41, '正在同步控制节点'],
-  [0.65, '正在检查系统状态'],
-  [0.88, '启动序列完成'],
+  [0, 'Initializing display link'],
+  [0.19, 'Calibrating holographic grid'],
+  [0.41, 'Synchronizing console nodes'],
+  [0.65, 'Checking system status'],
+  [0.88, 'Startup sequence complete'],
 ];
 
 function createSplash(settings, onRelease) {
   const root = document.createElement('div');
   root.id = 'dsh-deltaforce-splash';
   root.setAttribute('role', 'dialog');
-  root.setAttribute('aria-label', 'DSH 启动动画');
+  root.setAttribute('aria-label', 'DSH startup cinematic');
   const style = document.createElement('style');
   style.textContent = stylesheet;
   const frame = document.createElement('div');
@@ -34,7 +34,7 @@ function createSplash(settings, onRelease) {
     <div class="cin-caption"><strong></strong><span></span></div>
     <div class="cin-progress" aria-hidden="true"><i></i></div>
     ${sequenceMarkup}
-    <button type="button" class="cin-skip">跳过 <kbd>Esc</kbd></button>`;
+    <button type="button" class="cin-skip">Skip <kbd>Esc</kbd></button>`;
   root.append(style, frame);
 
   const video = frame.querySelector('video');

@@ -4,6 +4,7 @@ export const name = 'dsh-deltaforce';
 const media = [
   ['boot.mp4', 'video/mp4'],
   ['intro.wav', 'audio/wav'],
+  ['orbital-finale.png', 'image/png'],
 ];
 
 export function byteRange(header, size) {

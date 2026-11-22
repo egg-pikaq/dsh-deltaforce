@@ -1,9 +1,9 @@
 {"duration": 17650, "cues": [
   {"at": 0, "kind": "orbit"},
-  {"at": 1000, "kind": "authorization", "label": "需要访问许可", "spoken": "Access authorization required."},
-  {"at": 3400, "kind": "identity", "label": "身份资料确认", "spoken": "Verifying identity."},
-  {"at": 5300, "kind": "uplink", "label": "接入哈夫克网络", "spoken": "Connecting to the Haavk network.", "synthesis": "Connecting to the Havk network."},
-  {"at": 7500, "kind": "sync", "label": "同步超算核心", "spoken": "Synchronizing the compute core."},
-  {"at": 9800, "kind": "verified", "label": "读取完毕 · 核验通过", "spoken": "Scan complete. Verification passed."},
-  {"at": 13650, "kind": "welcome", "label": "欢迎 · 会话已建立", "spoken": "Identity verified. Session established."}
+  {"at": 1000, "kind": "authorization", "label": "ACCESS AUTHORIZATION", "spoken": "Access authorization required."},
+  {"at": 3400, "kind": "identity", "label": "IDENTITY VERIFICATION", "spoken": "Verifying identity."},
+  {"at": 5300, "kind": "uplink", "label": "NETWORK UPLINK", "spoken": "Connecting to the Haavk network.", "synthesis": "Connecting to the Havk network."},
+  {"at": 7500, "kind": "sync", "label": "COMPUTE CORE SYNC", "spoken": "Synchronizing the compute core."},
+  {"at": 9800, "kind": "verified", "label": "VERIFICATION COMPLETE", "spoken": "Scan complete. Verification passed."},
+  {"at": 13650, "kind": "welcome", "label": "SESSION ESTABLISHED", "spoken": "Identity verified. Session established."}
 ]}
