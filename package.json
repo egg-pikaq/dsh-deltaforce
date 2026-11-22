@@ -1,6 +1,6 @@
 {
   "name": "dsh-deltaforce",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "Local cinematic startup overlay for DeepSeek Harness Desktop",
   "type": "module",
   "exports": {

@@ -124,10 +124,10 @@ test('disposing a client releases its overlay and reapplying skips auto-play on 
   assert.equal(started, 1);
 });
 
-test('a scene handoff eases across 620 ms and reduced motion cuts immediately', async () => {
+test('a scene handoff eases across 940 ms and reduced motion cuts immediately', async () => {
   const source = await readFile(new URL('../src/sequence.js', import.meta.url), 'utf8');
   const stageMix = vm.runInNewContext(source + '\nstageMix;');
-  const samples = [-1, 0, 100, 310, 520, 620, 700].map((ms) => stageMix(ms, false));
+  const samples = [-1, 0, 100, 470, 800, 940, 1000].map((ms) => stageMix(ms, false));
   assert.equal(samples[0], 0);
   assert.equal(samples[1], 0);
   assert.ok(samples[2] > 0 && samples[2] < .2);
@@ -135,5 +135,6 @@ test('a scene handoff eases across 620 ms and reduced motion cuts immediately', 
   assert.ok(samples[4] > .8 && samples[4] < 1);
   assert.equal(samples[5], 1);
   assert.equal(samples[6], 1);
-  assert.equal(stageMix(0, true), 1);
+  assert.equal(stageMix(469, true), 0);
+  assert.equal(stageMix(470, true), 1);
 });
