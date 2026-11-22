@@ -100,7 +100,6 @@ function prepareSequence(frame, reduced) {
       const progress = Math.min(1, t / introDuration);
       if (!reduced) {
         chamber.style.setProperty('--push', 1 + .044 * progress);
-        chamber.style.setProperty('--drift', `${-1.2 * progress}%`);
         projector.style.setProperty('--scan', `${50 - 50 * Math.cos(t * Math.PI / 1750)}%`);
       }
 
