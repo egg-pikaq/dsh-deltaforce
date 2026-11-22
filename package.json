@@ -1,6 +1,6 @@
 {
   "name": "dsh-deltaforce",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Local cinematic startup overlay for DeepSeek Harness Desktop",
   "type": "module",
   "exports": {
@@ -8,7 +8,7 @@
     "./client": "./dist/client.js",
     "./package.json": "./package.json"
   },
-  "files": ["src/index.js", "dist/client.js", "assets/boot.mp4", "assets/intro.wav", "assets/orbital-finale.png", "cordis.patch.yml", "README.md", "SECURITY.md"],
+  "files": ["src/index.js", "dist/client.js", "assets/boot.mp4", "assets/intro.wav", "assets/orbital-finale.png", "assets/prelude-*.jpg", "cordis.patch.yml", "README.md", "SECURITY.md"],
   "scripts": {
     "build": "node tools/build.mjs",
     "test": "node --test test/*.test.js"

@@ -1,10 +1,10 @@
 # DSH Cinematic Boot
 
-独立的 DeepSeek Harness 启动动画插件。太空开场接入六步身份验证，较慢的英文女声与字幕同步，前导使用英文界面、凭证扫描、轨道链路和核心刻度环，随后播放本地 CG，最后以「天空属于哈夫克」行星夜面淡入 DSH。身份资料页显示 `GUEST NODE`。已按 Windows DSH `0.2.2-rc.3` / Cordis `4.1.0` 的本机安装包进行适配。
+独立的 DeepSeek Harness 启动动画插件。太空开场接入六步身份验证，较慢的英文女声与字幕同步，前导使用英文界面、完整的凭证扫描舱、轨道链路和立体核心，场景在 620 毫秒内交叉淡入，随后播放本地 CG，最后以「天空属于哈夫克」行星夜面淡入 DSH。身份资料页显示 `GUEST NODE`。已按 Windows DSH `0.2.2-rc.3` / Cordis `4.1.0` 的本机安装包进行适配。
 
 ## 安装和使用
 
-安装包是 DSH 可接收的 npm 本地压缩包 `dsh-deltaforce-0.2.4.tgz`。项目使用 Node.js 22.19 或更高版本构建。
+安装包是 DSH 可接收的 npm 本地压缩包 `dsh-deltaforce-0.2.5.tgz`。项目使用 Node.js 22.19 或更高版本构建。
 
 1. 完全退出 DSH（包含托盘进程）。
 2. 在包含安装包的目录执行以下 PowerShell 命令。已将 `dsh` 加入 PATH 时，可直接使用 `dsh`。
@@ -12,7 +12,7 @@
 
 ```powershell
 $cli = Join-Path $env:LOCALAPPDATA 'Programs\DeepSeek Harness\resources\runtime\cli\bin\dsh.cmd'
-& $cli plugin --profile desktop add (Resolve-Path '.\dsh-deltaforce-0.2.4.tgz').Path --ignore-scripts --prefer-offline
+& $cli plugin --profile desktop add (Resolve-Path '.\dsh-deltaforce-0.2.5.tgz').Path --ignore-scripts --prefer-offline
 ```
 
 本地安装包本身已经在磁盘上。桌面 profile 的其他依赖若缺少 pnpm 缓存，安装时仍可能需要联网补齐。
@@ -49,7 +49,7 @@ New-Item -ItemType Directory -Force -Path $testRoot | Out-Null
 $env:DSH_HOME = $testRoot
 $cli = Join-Path $env:LOCALAPPDATA 'Programs\DeepSeek Harness\resources\runtime\cli\bin\dsh.cmd'
 & $cli --profile cinematic-test --from-default-profile web --dump-config | Out-Null
-& $cli plugin --profile cinematic-test add (Resolve-Path '.\dist\dsh-deltaforce-0.2.4.tgz').Path --ignore-scripts --offline
+& $cli plugin --profile cinematic-test add (Resolve-Path '.\dist\dsh-deltaforce-0.2.5.tgz').Path --ignore-scripts --offline
 & $cli --profile cinematic-test --dump-config | Select-String '^\s*name: dsh-deltaforce$'
 & $cli --profile cinematic-test --host 127.0.0.1 --port 0 --no-open
 ```
@@ -59,7 +59,7 @@ $cli = Join-Path $env:LOCALAPPDATA 'Programs\DeepSeek Harness\resources\runtime\
 ## 结构
 
 - `cordis.patch.yml` 将插件插入 Cordis Loader。
-- `src/index.js` 在 DSH 现有 Host 注册固定的 WAV、PNG 和 MP4 资源路由。
+- `src/index.js` 在 DSH 现有 Host 注册固定的 WAV、PNG、JPEG 和 MP4 资源路由。
 - `src/client.js` 注册设置、处理页面启动和热重载释放。
 - `src/splash.js` 管理覆盖层的前导、原片、回退和片尾。六步字幕和节奏来自 `src/intro-cues.json`，画面由 `src/sequence.js`、`src/sequence-hud.js` 和 `src/sequence.css` 渲染。
 - `tools/build.mjs` 将浏览器模块做成本地同包工厂。安装包不执行构建脚本。

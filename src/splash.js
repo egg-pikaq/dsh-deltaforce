@@ -104,7 +104,6 @@ function createSplash(settings, onRelease) {
       controller.abort();
       cancelAnimationFrame(frameId);
       clearTimeout(graceTimer);
-      sequence.stop();
       try { video.pause(); } catch {}
       try { voice.pause(); } catch {}
     }
