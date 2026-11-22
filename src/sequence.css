@@ -201,13 +201,6 @@
   #dsh-deltaforce-splash .cin-data-rain { display: none; }
 }
 
-#dsh-deltaforce-splash .cin-console-hud {
-  position: absolute;
-  inset: 13% 10% auto;
-  width: 80%;
-  height: 44%;
-  pointer-events: none;
-}
 #dsh-deltaforce-splash .cin-finale-backdrop {
   position: absolute;
   inset: 0;
@@ -232,8 +225,7 @@
   width: min(100%, 177.7778vh);
   aspect-ratio: 16 / 9;
   pointer-events: none;
-  transform-origin: center 38%;
-  transform: translate(-50%, -50%) scale(var(--push, 1));
+  transform: translate(-50%, -50%);
 }
 #dsh-deltaforce-splash .cin-chamber-art {
   position: absolute;
@@ -257,31 +249,20 @@
   overflow: hidden;
   border: 1px solid #86d9ff72;
   box-shadow: 0 0 25px #49a3d331, inset 0 0 16px #619cd536;
-  background: #04172830;
+  background: #041820;
+  container-type: inline-size;
   clip-path: polygon(0 4%, 6% 0, 100% 0, 100% 93%, 94% 100%, 0 100%);
 }
-#dsh-deltaforce-splash .cin-projector img,
 #dsh-deltaforce-splash .cin-projector-glass,
-#dsh-deltaforce-splash .cin-stages,
-#dsh-deltaforce-splash .cin-projector canvas {
+#dsh-deltaforce-splash .cin-stages {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
 }
-#dsh-deltaforce-splash .cin-projector img {
-  object-fit: cover;
-  object-position: 50% 13%;
-  mix-blend-mode: screen;
-  mask-image: linear-gradient(180deg, transparent, #000 13% 78%, transparent 99%);
-  opacity: 0;
-}
-#dsh-deltaforce-splash .cin-projector canvas { opacity: 0; }
 #dsh-deltaforce-splash .cin-projector-glass {
   z-index: 1;
   background: repeating-linear-gradient(180deg, transparent 0 7px, #95d7ff1a 8px 9px);
   box-shadow: inset 0 0 23px #52ccff3b;
-  opacity: calc(.48 + .42 * var(--charge, 0));
+  opacity: .42;
 }
 #dsh-deltaforce-splash .cin-projector::after {
   position: absolute;
@@ -290,7 +271,7 @@
   content: '';
   border: 1px solid #a4f8d7;
   box-shadow: inset 0 0 22px #9cfdd869, 0 0 16px #a0ffdc80;
-  opacity: calc(.55 * var(--lock, 0));
+  opacity: calc(.3 * var(--lock, 0));
 }
 #dsh-deltaforce-splash .cin-projector-scan {
   position: absolute;
@@ -330,4 +311,107 @@
 @media (prefers-reduced-motion: reduce) {
   #dsh-deltaforce-splash[data-mode=intro] .cin-orbit { transition: none; }
   #dsh-deltaforce-splash .cin-projector-scan { opacity: .48; }
+}
+
+#dsh-deltaforce-splash .cin-terminal-rain {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, #0008, #0004 48%, #000c 75%, #0008);
+}
+#dsh-deltaforce-splash .cin-terminal-rain span {
+  position: absolute;
+  top: -100%;
+  left: var(--column);
+  white-space: pre;
+  font: 500 clamp(5px, 2.1cqw, 12px)/1.08 Consolas, monospace;
+  background: linear-gradient(180deg, #57d09a00, #52dbae88 75%, #b0ffdf 100%);
+  background-clip: text;
+  color: transparent;
+}
+#dsh-deltaforce-splash[data-mode=intro] .cin-terminal-rain span {
+  animation: dsh-deltaforce-terminal-rain var(--fall) var(--delay) linear infinite;
+}
+@keyframes dsh-deltaforce-terminal-rain { to { top: 104%; } }
+
+#dsh-deltaforce-splash .cin-terminal-log {
+  position: absolute;
+  z-index: 3;
+  inset: 7% 39% 7% 4.5%;
+  overflow: hidden;
+  display: block;
+  color: #a0b8bb;
+  font: 500 clamp(6px, 2.22cqw, 15px)/1.48 Consolas, monospace;
+  text-shadow: 0 1px 3px #061013, 0 0 7px #031013;
+  scrollbar-width: none;
+  white-space: pre-wrap;
+}
+#dsh-deltaforce-splash .cin-terminal-row[data-tone=command] { color: #87e9fb; }
+#dsh-deltaforce-splash .cin-terminal-row[data-tone=pass] { color: #72f6ae; }
+#dsh-deltaforce-splash .cin-terminal-row {
+  animation: dsh-deltaforce-terminal-row 170ms ease both;
+}
+@keyframes dsh-deltaforce-terminal-row { from { opacity: .18; } to { opacity: 1; } }
+
+#dsh-deltaforce-splash .cin-terminal-emblem {
+  position: absolute;
+  inset: 14% 5% 14% 54%;
+  opacity: .66;
+}
+#dsh-deltaforce-splash .cin-emblem-seed {
+  position: absolute;
+  left: 47%;
+  top: 41%;
+  width: 11%;
+  aspect-ratio: 1;
+  transform: rotate(45deg);
+  background: #8ee8f68f;
+  box-shadow: 0 0 12px #69c1e2aa;
+  opacity: 0;
+}
+#dsh-deltaforce-splash .cin-emblem-piece {
+  position: absolute;
+  opacity: 0;
+  background: linear-gradient(150deg, #b5f5ff, #58a5ba 57%, #296478);
+  filter: drop-shadow(0 0 4px #82d7ebb0);
+  transform: translate(var(--entry-x, 0), var(--entry-y, 0));
+}
+#dsh-deltaforce-splash .cin-emblem-spine {
+  inset: 5% 39% 35%;
+  --entry-y: calc(-47% * (1 - var(--assemble, 0)));
+  clip-path: polygon(0 0, 100% 0, 100% 65%, 69% 77%, 69% 100%, 0 100%, 0 0,
+    16% 12%, 16% 87%, 53% 87%, 53% 68%, 84% 56%, 84% 12%, 16% 12%, 0 0);
+}
+#dsh-deltaforce-splash .cin-emblem-left {
+  inset: 31% 66% 53% 2%;
+  --entry-x: calc(-70% * (1 - var(--assemble, 0)));
+  clip-path: polygon(0 18%, 79% 18%, 100% 100%, 21% 100%);
+}
+#dsh-deltaforce-splash .cin-emblem-right {
+  inset: 38% 3% 46% 65%;
+  --entry-x: calc(70% * (1 - var(--assemble, 0)));
+  clip-path: polygon(23% 0, 100% 0, 77% 83%, 0 83%);
+}
+#dsh-deltaforce-splash .cin-emblem-word {
+  position: absolute;
+  inset: auto 0 7%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: .18em;
+  color: #9de5ec;
+  font: 650 clamp(10px, 5.35cqw, 28px)/1 Consolas, monospace;
+  text-shadow: 0 0 12px #66cfdf77;
+}
+#dsh-deltaforce-splash .cin-emblem-word span {
+  opacity: 0;
+  transform: translateY(calc(-72% * (1 - var(--assemble, 0))));
+}
+#dsh-deltaforce-splash .cin-emblem-word span:nth-child(even) {
+  transform: translateY(calc(72% * (1 - var(--assemble, 0))));
+}
+#dsh-deltaforce-splash .cin-projector-scan { opacity: .38; }
+@media (prefers-reduced-motion: reduce) {
+  #dsh-deltaforce-splash .cin-terminal-rain { display: none; }
+  #dsh-deltaforce-splash .cin-terminal-row { animation: none; }
 }

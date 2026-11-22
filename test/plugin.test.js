@@ -126,7 +126,7 @@ test('disposing a client releases its overlay and reapplying skips auto-play on 
 
 test('a scene handoff eases across 940 ms and reduced motion cuts immediately', async () => {
   const source = await readFile(new URL('../src/sequence.js', import.meta.url), 'utf8');
-  const stageMix = vm.runInNewContext(source + '\nstageMix;');
+  const stageMix = vm.runInNewContext(source + '\nstageMix;', { terminalScreenMarkup: '' });
   const samples = [-1, 0, 100, 470, 800, 940, 1000].map((ms) => stageMix(ms, false));
   assert.equal(samples[0], 0);
   assert.equal(samples[1], 0);
@@ -137,4 +137,16 @@ test('a scene handoff eases across 940 ms and reduced motion cuts immediately', 
   assert.equal(samples[6], 1);
   assert.equal(stageMix(469, true), 0);
   assert.equal(stageMix(470, true), 1);
+});
+
+test('emblem builds, holds, reverses along the same timeline and loops', async () => {
+  const source = await readFile(new URL('../src/terminal-screen.js', import.meta.url), 'utf8');
+  const time = vm.runInNewContext(source + '\nassemblyTime;');
+  assert.equal(time(0), 0);
+  assert.equal(time(3100), 3100);
+  assert.equal(time(4350), 3100);
+  assert.equal(time(5350), 2100);
+  assert.equal(time(7450), 0);
+  assert.equal(time(8400), 0);
+  assert.equal(time(9000), time(600));
 });

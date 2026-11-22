@@ -6,8 +6,6 @@ const media = [
   ['intro.wav', 'audio/wav'],
   ['orbital-finale.png', 'image/png'],
   ['prelude-identity.jpg', 'image/jpeg'],
-  ['prelude-uplink.jpg', 'image/jpeg'],
-  ['prelude-core.jpg', 'image/jpeg'],
 ];
 
 export function byteRange(header, size) {

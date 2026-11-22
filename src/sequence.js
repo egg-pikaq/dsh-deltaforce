@@ -15,9 +15,7 @@ const sequenceMarkup = `
         <img class="cin-chamber-art" src="${preludeMedia}prelude-identity.jpg" alt="">
         <div class="cin-projector">
           <div class="cin-projector-glass"></div>
-          <img class="cin-projector-uplink" src="${preludeMedia}prelude-uplink.jpg" alt="">
-          <img class="cin-projector-core" src="${preludeMedia}prelude-core.jpg" alt="">
-          <canvas class="cin-console-hud"></canvas>
+          ${terminalScreenMarkup}
           <div class="cin-projector-scan"></div>
         </div>
       </div>
@@ -45,10 +43,6 @@ function prepareSequence(frame, reduced) {
   const chamber = frame.querySelector('.cin-chamber');
   const room = frame.querySelector('.cin-chamber-art');
   const projector = frame.querySelector('.cin-projector');
-  const uplink = frame.querySelector('.cin-projector-uplink');
-  const core = frame.querySelector('.cin-projector-core');
-  const canvas = frame.querySelector('.cin-console-hud');
-  const paintHud = prepareHud(canvas, reduced);
   const record = frame.querySelector('.cin-console-identity');
   const count = frame.querySelector('.cin-console-count');
   const meter = frame.querySelector('.cin-console-footer i');
@@ -84,6 +78,7 @@ function prepareSequence(frame, reduced) {
   }
 
   const cueTimes = Object.fromEntries(introCues.map(({ kind, at }) => [kind, at]));
+  const paintTerminal = prepareTerminal(projector, cueTimes, reduced);
   let lastIndex = -1;
 
   return {
@@ -96,34 +91,12 @@ function prepareSequence(frame, reduced) {
         lastIndex = index;
       }
 
-      // The chamber and its HUD move along one continuous camera track.
       const progress = Math.min(1, t / introDuration);
-      if (!reduced) {
-        chamber.style.setProperty('--push', 1 + .044 * progress);
-        projector.style.setProperty('--scan', `${50 - 50 * Math.cos(t * Math.PI / 1750)}%`);
-      }
+      chamber.classList.toggle('cin-chamber-ready', room.complete && room.naturalWidth > 0);
+      if (!reduced) projector.style.setProperty('--scan', `${50 - 50 * Math.cos(t * Math.PI / 1750)}%`);
+      projector.style.setProperty('--lock', cueMix(t, cueTimes.verified, reduced));
+      paintTerminal(t);
 
-      const linkWeight = cueMix(t, cueTimes.uplink, reduced) * (1 - cueMix(t, cueTimes.sync, reduced));
-      const coreWeight = cueMix(t, cueTimes.sync, reduced) * (1 - .45 * cueMix(t, cueTimes.welcome, reduced));
-      const lock = cueMix(t, cueTimes.verified, reduced);
-      const ready = (image) => image.complete && image.naturalWidth > 0;
-      const linkReady = ready(uplink);
-      const coreReady = ready(core);
-      chamber.classList.toggle('cin-chamber-ready', ready(room));
-      uplink.style.opacity = linkReady ? .88 * linkWeight : 0;
-      core.style.opacity = coreReady ? .91 * coreWeight : 0;
-      projector.style.setProperty('--lock', lock);
-      projector.style.setProperty('--charge', Math.max(linkWeight, coreWeight));
-
-      const kind = introCues[index].kind;
-      const fallback = (kind === 'identity' && !ready(room)) ||
-        (kind === 'uplink' && !linkReady) ||
-        ((kind === 'sync' || kind === 'verified') && !coreReady);
-      canvas.style.opacity = Number(fallback);
-      if (fallback) {
-        const cue = introCues[index];
-        paintHud(kind, t - cue.at, (introCues[index + 1]?.at ?? introDuration) - cue.at);
-      }
       record.style.opacity = cueMix(t, cueTimes.identity, reduced) * (1 - cueMix(t, cueTimes.uplink, reduced));
 
       for (const [i, panel] of panels.entries()) {
